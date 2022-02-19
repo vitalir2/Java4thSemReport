@@ -3,7 +3,6 @@ package task8;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import task8.chain.CompositeHandler;
-import task8.chain.Handler;
 import task8.chain.PrintHandler;
 
 public class ChainOfResponsibilitiesTest {

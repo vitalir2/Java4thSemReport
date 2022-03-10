@@ -1,10 +1,29 @@
 package com.example.finalprj.model;
 
-import lombok.Data;
+import lombok.*;
 
-@Data
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "market")
+@Getter
+@Setter
 public class Market {
-    private final long id;
-    private final String name;
-    private final String address;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
+
+    @Column(name = "name")
+    private String name;
+
+    @Column(name = "address")
+    private String address;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "market")
+    private List<Product> productEntityList = new ArrayList<>();
 }

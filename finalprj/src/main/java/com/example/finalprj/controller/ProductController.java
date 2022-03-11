@@ -23,6 +23,21 @@ public class ProductController {
         return productRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable("id") long id) {
+        return productRepository.findById(id).orElseThrow();
+    }
+
+    @GetMapping(params = {"name"})
+    public List<Product> getProductsByName(@RequestParam String name) {
+        return productRepository.findProductsByName(name);
+    }
+
+    @GetMapping(params = {"price"})
+    public List<Product> getProductsByPrice(@RequestParam int price) {
+        return productRepository.findProductsByPrice(price);
+    }
+
     @PostMapping
     public void createProduct(@RequestBody Product product) {
         productRepository.save(product);

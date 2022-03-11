@@ -23,6 +23,21 @@ public class MarketController {
         return marketRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public Market getMarketById(@PathVariable("id") long id) {
+        return marketRepository.findById(id).orElseThrow();
+    }
+
+    @GetMapping(params = {"name"})
+    public List<Market> getMarketsByName(@RequestParam String name) {
+        return marketRepository.findMarketsByName(name);
+    }
+
+    @GetMapping(params = {"address"})
+    public List<Market> getMarketsByAddress(@RequestParam String address) {
+        return marketRepository.findMarketsByAddress(address);
+    }
+
     @PostMapping
     public void createMarket(@RequestBody Market market) {
         marketRepository.save(market);

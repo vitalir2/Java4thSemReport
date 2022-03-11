@@ -15,6 +15,9 @@ repositories {
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    implementation("org.springframework:spring-context:5.3.16")
+    implementation("ch.qos.logback:logback-classic:1.2.11")
+    implementation("org.slf4j:jcl-over-slf4j:1.7.36")
     implementation("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }

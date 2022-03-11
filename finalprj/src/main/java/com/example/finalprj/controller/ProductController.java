@@ -1,7 +1,7 @@
 package com.example.finalprj.controller;
 
 import com.example.finalprj.model.Product;
-import com.example.finalprj.repository.ProductRepository;
+import com.example.finalprj.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,40 +11,40 @@ import java.util.List;
 @RequestMapping("/product")
 public class ProductController {
 
-    private final ProductRepository productRepository;
+    private final ProductService productService;
 
     @Autowired
-    public ProductController(ProductRepository productRepository) {
-        this.productRepository = productRepository;
+    public ProductController(ProductService productService) {
+        this.productService = productService;
     }
 
     @GetMapping
     public List<Product> getProducts() {
-        return productRepository.findAll();
+        return productService.getProducts();
     }
 
     @GetMapping("/{id}")
     public Product getProductById(@PathVariable("id") long id) {
-        return productRepository.findById(id).orElseThrow();
+        return productService.getProductById(id);
     }
 
     @GetMapping(params = {"name"})
     public List<Product> getProductsByName(@RequestParam String name) {
-        return productRepository.findProductsByName(name);
+        return productService.getProductsByName(name);
     }
 
     @GetMapping(params = {"price"})
     public List<Product> getProductsByPrice(@RequestParam int price) {
-        return productRepository.findProductsByPrice(price);
+        return productService.getProductsByPrice(price);
     }
 
     @PostMapping
     public void createProduct(@RequestBody Product product) {
-        productRepository.save(product);
+        productService.create(product);
     }
 
     @DeleteMapping
     public void deleteProduct(@RequestBody Product product) {
-        productRepository.delete(product);
+        productService.delete(product);
     }
 }

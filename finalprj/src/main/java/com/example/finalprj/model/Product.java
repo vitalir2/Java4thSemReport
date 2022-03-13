@@ -1,10 +1,7 @@
 package com.example.finalprj.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -14,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "products")
 @Getter
 @Setter
+@ToString
 public class Product {
 
     @Id
@@ -38,5 +36,6 @@ public class Product {
                     name = "fk_products_market_id"
             )
     )
+    @ToString.Exclude
     private Market market;
 }

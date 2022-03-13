@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "market")
 @Getter
 @Setter
+@ToString
 public class Market {
 
     @Id
@@ -25,5 +26,6 @@ public class Market {
     private String address;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "market")
+    @ToString.Exclude
     private List<Product> productEntityList = new ArrayList<>();
 }

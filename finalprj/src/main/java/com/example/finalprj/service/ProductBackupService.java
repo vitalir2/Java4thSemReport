@@ -4,6 +4,8 @@ import com.example.finalprj.Configuration;
 import com.example.finalprj.model.Product;
 import com.example.finalprj.repository.ProductRepository;
 import lombok.SneakyThrows;
+import org.springframework.jmx.export.annotation.ManagedOperation;
+import org.springframework.jmx.export.annotation.ManagedResource;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;

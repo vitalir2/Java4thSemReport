@@ -3,25 +3,29 @@ package com.example.finalprj.service;
 import com.example.finalprj.model.Product;
 import com.example.finalprj.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    public ProductService(ProductRepository productRepository) {
+    public ProductService(ProductRepository productRepository, EmailService emailService) {
         this.productRepository = productRepository;
+        this.emailService = emailService;
     }
 
-    public void create(Product product) {
-        log.info("Product " + product + " was saved");
+    public void save(Product product) {
+        var objectWasSavedMessage = "Product " + product + " was saved";
+        log.info(objectWasSavedMessage);
+        emailService.sendEmailMessage(objectWasSavedMessage);
+
         productRepository.save(product);
     }
 

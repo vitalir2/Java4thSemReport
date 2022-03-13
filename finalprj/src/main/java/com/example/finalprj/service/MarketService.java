@@ -3,24 +3,28 @@ package com.example.finalprj.service;
 import com.example.finalprj.model.Market;
 import com.example.finalprj.repository.MarketRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @Slf4j
+@Transactional
 public class MarketService {
 
     private final MarketRepository marketRepository;
+    private final EmailService emailService;
 
-    @Autowired
-    public MarketService(MarketRepository marketRepository) {
+    public MarketService(MarketRepository marketRepository, EmailService emailService) {
         this.marketRepository = marketRepository;
+        this.emailService = emailService;
     }
 
-    public void create(Market market) {
-        log.info("Market " + market + "was saved");
+    public void save(Market market) {
+        var objectWasSavedMessage = "Market " + market + "was saved";
+        log.info(objectWasSavedMessage);
+        emailService.sendEmailMessage(objectWasSavedMessage);
         marketRepository.save(market);
     }
 

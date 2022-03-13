@@ -40,7 +40,7 @@ public class ProductController {
 
     @PostMapping
     public void createProduct(@RequestBody Product product) {
-        productService.create(product);
+        productService.save(product);
     }
 
     @DeleteMapping

@@ -40,7 +40,7 @@ public class MarketController {
 
     @PostMapping
     public void createMarket(@RequestBody Market market) {
-        marketService.create(market);
+        marketService.save(market);
     }
 
     @DeleteMapping

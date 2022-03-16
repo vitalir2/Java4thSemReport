@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Registration</title>
+    <style>
+        #main-form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+    </style>
+</head>
+<body>
+<form id="main-form" action="#" th:action="@{/registration}" th:object="${registrationForm}" method="post">
+    <label>
+        Login
+        <input type="text" th:field="*{name}">
+    </label>
+    <label>
+        Password
+        <input type="text" th:field="*{password}">
+    </label>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>

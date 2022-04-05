@@ -1,6 +1,7 @@
 package com.example.finalprj.controller;
 
 import com.example.finalprj.model.Product;
+import com.example.finalprj.model.ProductDto;
 import com.example.finalprj.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -39,12 +40,12 @@ public class ProductController {
     }
 
     @PostMapping
-    public void createProduct(@RequestBody Product product) {
+    public void createProduct(@RequestBody ProductDto product) {
         productService.save(product);
     }
 
     @DeleteMapping
-    public void deleteProduct(@RequestBody Product product) {
+    public void deleteProduct(@RequestBody ProductDto product) {
         productService.delete(product);
     }
 }

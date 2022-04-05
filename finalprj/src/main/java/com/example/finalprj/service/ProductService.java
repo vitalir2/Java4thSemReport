@@ -1,6 +1,9 @@
 package com.example.finalprj.service;
 
+import com.example.finalprj.mapper.ProductMapper;
 import com.example.finalprj.model.Product;
+import com.example.finalprj.model.ProductDto;
+import com.example.finalprj.repository.MarketRepository;
 import com.example.finalprj.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -14,24 +17,27 @@ import java.util.List;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
     private final EmailService emailService;
 
-    public ProductService(ProductRepository productRepository, EmailService emailService) {
+    public ProductService(ProductRepository productRepository, ProductMapper productMapper, EmailService emailService) {
         this.productRepository = productRepository;
+        this.productMapper = productMapper;
         this.emailService = emailService;
     }
 
-    public void save(Product product) {
+    public void save(ProductDto product) {
         var objectWasSavedMessage = "Product " + product + " was saved";
         log.info(objectWasSavedMessage);
         emailService.sendEmailMessage(objectWasSavedMessage);
-
-        productRepository.save(product);
+        var productEntity = productMapper.mapDtoToEntity(product);
+        productRepository.save(productEntity);
     }
 
-    public void delete(Product product) {
+    public void delete(ProductDto product) {
         log.info("Product " + product + " was deleted");
-        productRepository.delete(product);
+        var productEntity = productMapper.mapDtoToEntity(product);
+        productRepository.delete(productEntity);
     }
 
     public List<Product> getProducts() {

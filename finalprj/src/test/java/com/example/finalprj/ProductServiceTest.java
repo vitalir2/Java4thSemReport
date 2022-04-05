@@ -1,6 +1,10 @@
 package com.example.finalprj;
 
+import com.example.finalprj.mapper.ProductMapper;
+import com.example.finalprj.model.Market;
 import com.example.finalprj.model.Product;
+import com.example.finalprj.model.ProductDto;
+import com.example.finalprj.repository.MarketRepository;
 import com.example.finalprj.repository.ProductRepository;
 import com.example.finalprj.service.FakeEmailService;
 import com.example.finalprj.service.ProductService;
@@ -17,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -27,10 +32,20 @@ public class ProductServiceTest {
     @Mock
     ProductRepository productRepository;
 
+    @NonNull
+    @Mock
+    ProductMapper productMapper;
+
     @Captor
     ArgumentCaptor<Product> captor;
 
     ProductService productService;
+
+    private final List<ProductDto> fakeProductsDto = List.of(
+            new ProductDto("eggs", 45, 1L),
+            new ProductDto("cheese", 123, 1L),
+            new ProductDto("milk", 88, 1L)
+    );
 
     private final List<Product> fakeProducts = List.of(
             new Product(1, "eggs", 45, null),
@@ -40,30 +55,36 @@ public class ProductServiceTest {
 
     @BeforeEach
     void init() {
-        this.productService = new ProductService(productRepository, new FakeEmailService());
+        this.productService = new ProductService(productRepository, productMapper, new FakeEmailService());
     }
 
     @Test
     void saveProduct() {
-        Product product = fakeProducts.get(0);
+        ProductDto product = fakeProductsDto.get(0);
+        when(productMapper.mapDtoToEntity(any())).thenReturn(new Product(1, product.getName(), product.getPrice(), null));
         productService.save(product);
         verify(productRepository).save(captor.capture());
         Product captured = captor.getValue();
-        assertEquals(product, captured);
+        assertEquals(product.getName(), captured.getName());
+        assertEquals(product.getPrice(), captured.getPrice());
     }
 
     @Test
     void deleteProduct() {
-        Product product = fakeProducts.get(0);
+        ProductDto product = fakeProductsDto.get(0);
+        when(productMapper.mapDtoToEntity(any())).thenReturn(new Product(1, product.getName(), product.getPrice(), null));
         productService.delete(product);
-        verify(productRepository).delete(product);
+        verify(productRepository).delete(fakeProducts.get(0));
     }
 
     @Test
     void getAllProducts() {
         when(productRepository.findAll()).thenReturn(fakeProducts);
         var result = productService.getProducts();
-        assertEquals(fakeProducts, result);
+        for (int i = 0; i < result.size(); ++i) {
+            assertEquals(result.get(i).getName(), fakeProducts.get(i).getName());
+            assertEquals(result.get(i).getPrice(), fakeProducts.get(i).getPrice());
+        }
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.example.finalprj.service;
 import com.example.finalprj.mapper.ProductMapper;
 import com.example.finalprj.model.Product;
 import com.example.finalprj.model.ProductDto;
-import com.example.finalprj.repository.MarketRepository;
 import com.example.finalprj.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
